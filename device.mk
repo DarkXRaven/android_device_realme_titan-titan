@@ -5,7 +5,21 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-LOCAL_PATH := device/oplus/ossi
+LOCAL_PATH := device/realme/titan
+
+# Enable updating of APEXes
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+
+# Include GSI keys
+$(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
+
+# Dynamic
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
+#shipping level
+PRODUCT_SHIPPING_API_LEVEL := 30
+
+
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -21,11 +35,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     bootctrl.mt6877
 
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    bootctrl.mt6877 \
-    libgptutils \
-    libz \
-    libcutils
+#PRODUCT_STATIC_BOOT_CONTROL_HAL := \
+#    bootctrl.mt6877 \
+#    libgptutils \
+#    libz \
+#    libcutils
+
+# Fastbootd
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.0-impl-mock \
+    fastbootd
+
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
